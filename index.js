@@ -1,28 +1,29 @@
 var exec = require('child_process').execSync
 
 function _command (cmd, cb) {
-  exec(cmd, { cwd: __dirname }, function (err, stdout, stderr) {
-    cb(stdout.split('\n').join(''))
-  })
+    try {
+        return exec(cmd, { cwd: __dirname }).toString();
+    } catch (err) {
+        return '';
+    }
 }
 
 module.exports = { 
-    short : function (cb) { 
-      _command('git rev-parse --short HEAD', cb)
+    short : function () { 
+      return _command('git rev-parse --short HEAD').toString();
     }
-  , long : function (cb) { 
-      _command('git rev-parse HEAD', cb)
+  , long : function () { 
+      return _command('git rev-parse HEAD');
     }
-  , branch : function (cb) { 
-      _command('git rev-parse --abbrev-ref HEAD', cb)
+  , branch : function () { 
+      return _command('git rev-parse --abbrev-ref HEAD');
     }
-  , tag : function (cb) { 
-      _command('git describe --always --tag --abbrev=0', cb)
+  , tag : function () { 
+      return _command('git describe --always --tag --abbrev=0');
     }
   , log : function (cb) { 
-      _command('git log --no-color --pretty=format:\'[ "%H", "%s", "%cr", "%an" ],\' --abbrev-commit', function (str) {
+        var str = JSON.parse(_command('git log --no-color --pretty=format:\'[ "%H", "%s", "%cr", "%an" ],\' --abbrev-commit'));
         str = str.substr(0, str.length-1)
-        cb(JSON.parse('[' + str + ']'))
-      })
+        return JSON.parse('[' + str + ']');
     }
 }
