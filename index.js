@@ -46,6 +46,8 @@ module.exports = {
         var now = new Date();
 
         build_version += " -- " + now;
+      
+        return build_version;
           
     }
 }
