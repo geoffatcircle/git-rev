@@ -1,4 +1,4 @@
-var exec = require('child_process').exec
+var exec = require('child_process').execSync
 
 function _command (cmd, cb) {
   exec(cmd, { cwd: __dirname }, function (err, stdout, stderr) {
