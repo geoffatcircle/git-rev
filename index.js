@@ -44,8 +44,6 @@ module.exports = {
         build_version += '.' + git_short;
 
         var now = new Date();
-
-        build_version += " -- " + now;
       
         return build_version;
           
@@ -53,7 +51,7 @@ module.exports = {
     , buildDate : function () {
       
         var now = new Date();
-        return now.getFullYear() + now.getMonth() + now.getDate() + now.getHours() + now.getMinutes() + now.getSeconds();
+        return now.getFullYear() + "" + now.getMonth() + "" + now.getDate() + "-" + now.getHours() + "" + now.getMinutes() + "" + now.getSeconds();
           
     }
 }
